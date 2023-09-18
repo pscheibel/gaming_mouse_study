@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shooting Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script></head>
+<body>
+    <div id="playground">
+        
+        
+        <div class="tree-cont">
+            <img src="tree.png" alt="" id="tree">
+        </div>
+        <div class="controls">
+            <div id="timer">
+        
+            </div>
+            <div class="points">
+                Points: <span id="points">0</span>
+            </div>
+        </div>
+        
+        <div class="stats" style="display: none;">
+            <h2>Game Over</h2>
+            <h4>Points: <span id="final-total"></span></h4>
+            <div>
+                All Time Record: <span id="highest"></span>
+            </div>
+            <div>
+                <button id="restart">Restart</button>
+            </div>
+        </div>
+        <div class="home">
+            <button id="start" style="margin-left:0px;margin-top:340px">Start Game</button>
+        </div>
+        <div id="shells">
+            <div class="shell">
+                <img src="shell.png" alt="" class="shell visible" id="shell1">
+            </div>
+            <div class="shell">
+                <img src="shell.png" alt="" class="shell visible" id="shell2">
+            </div>
+            <div class="shell">
+                <img src="shell.png" alt="" class="shell visible" id="shell3">
+            </div>
+            <div class="shell">
+                <img src="shell.png" alt="" class="shell visible" id="shell4">
+            </div>
+            <div class="shell">
+                <img src="shell.png" alt="" class="shell visible" id="shell5">
+            </div>
+            <div class="shell">
+                <img src="shell.png" alt="" class="shell visible" id="shell6">
+            </div>
+        </div>
+    </div>
+
+
+    <audio src="shot.mp3" class="shoot"></audio>
+    <audio src="empty.mp3" class="empty"></audio>
+    <audio src="reload.mp3" id="reload"></audio>
+</body>
+<script src="myscript.js" async></script>
+</html>
