@@ -4,7 +4,7 @@
 // moving targets
 // 5 shots before reloading
 // 1 minute countown for each level
-
+let TEST_MODE = 0;
 
 // vars
 let img_src         = 'morhoon1.gif';
@@ -55,21 +55,11 @@ let shootMouseMissPositionArray=[]
 let lastShoot=[0,0]
 let generatedChickens=0
 
-async function saveNewPerson() {
-  const person = new Parse.Object("Person");
-
-  person.set("name", "John Snow");
-  person.set("age", 27);
-  try {
-    let result = await person.save()
-    alert('New object created with objectId: ' + result.id);
-    } catch(error) {
-        alert('Failed to create new object, with error code: ' + error.message);
-    }
-  } 
-
 //Reading your First Data Object from Back4App
 async function retrieveFullDataEntry() {
+   if(TEST_MODE==1){
+	  return
+  }
   const query = new Parse.Query("study_data");
   
   try {
@@ -77,18 +67,41 @@ async function retrieveFullDataEntry() {
     const fulldata = studydata.get("fulldata");
 	//console.log(fulldata)
   } catch (error) {
+	if(TEST_MODE==0){
+		alert(`Database connection does not work. Please restart the application or come back later!`);
+	}else{
     alert(`Failed to retrieve the object, with error code: ${error.message}`);
+	}
   }
 } 
 
+async function handleClipBoardPaste(result) {
+  try {
+    await navigator.clipboard.writeText(result.id);
+    console.log('USerId copied to clipboard');
+  } catch (err) {
+    console.error('Failed to copy: ', err);
+  }
+}
+
 async function saveNewFullDataEntry(fulldata) {
+  if(TEST_MODE==1){
+	  return
+  }
   const studydata = new Parse.Object("study_data");
   studydata.set("fulldata", fulldata);
   
   
   try {
     let result = await studydata.save()
-    alert('New object created with objectId: ' + result.id);
+	//console.log("write to clipboard")
+	await handleClipBoardPaste(result)
+	console.log("try open link")
+	window.open("https://docs.google.com/forms/d/e/1FAIpQLScabs-BVvivvdv6dK3tNPpv8_2SYFh5uhsWUeZzw1eMWFLMhw/viewform?usp=sf_link");
+	
+	alert('New object created with objectId. It should now be in your Clipboard, else please copy this id and use it in questionair!' + result.id);
+	
+	
     } catch(error) {
         alert('Failed to create new object, with error code: ' + error.message);
     }
