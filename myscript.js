@@ -99,8 +99,7 @@ async function saveNewFullDataEntry(fulldata) {
 	console.log("try open link")
 	await window.open("https://docs.google.com/forms/d/e/1FAIpQLScabs-BVvivvdv6dK3tNPpv8_2SYFh5uhsWUeZzw1eMWFLMhw/viewform?usp=sf_link");
 	
-	alert('New object created with objectId. It should now be in your Clipboard, else please copy this id and use it in questionair!' + result.id);
-	
+	alert('New object created with objectId. It should now be in your Clipboard and a new Tab should been open, else please copy this id and use it in questionair (https://docs.google.com/forms/d/e/1FAIpQLScabs-BVvivvdv6dK3tNPpv8_2SYFh5uhsWUeZzw1eMWFLMhw/viewform?usp=sf_link)!' + result.id);
 	
     } catch(error) {
         alert('Failed to create new object, with error code: ' + error.message);
