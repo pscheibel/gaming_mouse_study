@@ -55,11 +55,51 @@ let shootMouseMissPositionArray=[]
 let lastShoot=[0,0]
 let generatedChickens=0
 
+async function saveNewPerson() {
+  const person = new Parse.Object("Person");
+
+  person.set("name", "John Snow");
+  person.set("age", 27);
+  try {
+    let result = await person.save()
+    alert('New object created with objectId: ' + result.id);
+    } catch(error) {
+        alert('Failed to create new object, with error code: ' + error.message);
+    }
+  } 
+
+//Reading your First Data Object from Back4App
+async function retrieveFullDataEntry() {
+  const query = new Parse.Query("study_data");
+  
+  try {
+    const studydata = await query.get("GDMwty08xC");
+    const fulldata = studydata.get("fulldata");
+	//console.log(fulldata)
+  } catch (error) {
+    alert(`Failed to retrieve the object, with error code: ${error.message}`);
+  }
+} 
+
+async function saveNewFullDataEntry(fulldata) {
+  const studydata = new Parse.Object("study_data");
+  studydata.set("fulldata", fulldata);
+  
+  
+  try {
+    let result = await studydata.save()
+    alert('New object created with objectId: ' + result.id);
+    } catch(error) {
+        alert('Failed to create new object, with error code: ' + error.message);
+    }
+  } 
+
 // Initialization=================================
 function startGame() {
 	console.log(getState())
 	if(getState()==WAIT_FOR_BEGIN)
 	{
+		retrieveFullDataEntry()
 		hit_count=0;
 		window.focus();
 		countdown();
@@ -412,6 +452,7 @@ function endGame() {
 	
 	
 	console.log(JSON.stringify(resultJSON)) //TODO write to file instead
+	saveNewFullDataEntry(JSON.stringify(resultJSON))
 	
 	
     // Remove all 
