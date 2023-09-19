@@ -97,7 +97,7 @@ async function saveNewFullDataEntry(fulldata) {
 	//console.log("write to clipboard")
 	await handleClipBoardPaste(result)
 	console.log("try open link")
-	window.open("https://docs.google.com/forms/d/e/1FAIpQLScabs-BVvivvdv6dK3tNPpv8_2SYFh5uhsWUeZzw1eMWFLMhw/viewform?usp=sf_link");
+	await window.open("https://docs.google.com/forms/d/e/1FAIpQLScabs-BVvivvdv6dK3tNPpv8_2SYFh5uhsWUeZzw1eMWFLMhw/viewform?usp=sf_link");
 	
 	alert('New object created with objectId. It should now be in your Clipboard, else please copy this id and use it in questionair!' + result.id);
 	
