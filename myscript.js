@@ -9,7 +9,7 @@ let TEST_MODE = 0;
 // vars
 let img_src         = 'morhoon1.gif';
 let img_size        = 140;
-let set_timer       = 15;                                     // duration of the game in seconds
+let set_timer       = 59;                                     // duration of the game in seconds
 let width           = 900;
 let height          = 900;
 let smallSizeChance = 0.5;
@@ -54,6 +54,9 @@ let shootMouseHitPositionEntityArray=[]
 let shootMouseMissPositionArray=[]
 let lastShoot=[0,0]
 let generatedChickens=0
+let fairRandomNumbersSide = [];
+let fairRandomNumbersTopPos = [];
+let fairRandomNumbersSize = [];
 
 //Reading your First Data Object from Back4App
 async function retrieveFullDataEntry() {
@@ -99,7 +102,7 @@ async function saveNewFullDataEntry(fulldata) {
 	console.log("try open link")
 	await window.open("https://docs.google.com/forms/d/e/1FAIpQLScabs-BVvivvdv6dK3tNPpv8_2SYFh5uhsWUeZzw1eMWFLMhw/viewform?usp=sf_link");
 	
-	alert('New object created with objectId. It should now be in your Clipboard and a new Tab should been open, else please copy this id and use it in questionair (https://docs.google.com/forms/d/e/1FAIpQLScabs-BVvivvdv6dK3tNPpv8_2SYFh5uhsWUeZzw1eMWFLMhw/viewform?usp=sf_link)!' + result.id);
+	alert('New object created with objectId. It should now be in your Clipboard and a new Tab should been open, else please copy this id and use it in questionair (>> https://docs.google.com/forms/d/e/1FAIpQLScabs-BVvivvdv6dK3tNPpv8_2SYFh5uhsWUeZzw1eMWFLMhw/viewform?usp=sf_link <<), the user id is -> ' + result.id);
 	
     } catch(error) {
         alert('Failed to create new object, with error code: ' + error.message);
@@ -112,6 +115,12 @@ function startGame() {
 	if(getState()==WAIT_FOR_BEGIN)
 	{
 		retrieveFullDataEntry()
+		
+		for(let i=1; i<=parseInt(set_timer/4); i++) {
+		   fairRandomNumbersSide.push(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.99);
+		   fairRandomNumbersTopPos.push(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.99);
+		   fairRandomNumbersSize.push(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.99);
+		}
 		hit_count=0;
 		window.focus();
 		countdown();
@@ -140,6 +149,7 @@ function startGame() {
 	
 	}
 	generatedChickens++
+	console.log(fairRandom())
 }
 // Initialization=================================
 
@@ -286,6 +296,24 @@ function removeTarget(e,target_id) {
     // }, 500);
 }
 
+function fairRandom(side, toppos, size){
+	let random= Math.random()
+	let eleme=0,res=0
+	if (side){
+	  eleme = (fairRandomNumbersSide.length-1)*random
+	  res = fairRandomNumbersSide.splice(eleme,1);
+	}
+	else if (toppos){
+	  eleme = (fairRandomNumbersTopPos.length-1)*random
+	  res = fairRandomNumbersTopPos.splice(eleme,1);
+	} else{
+	  eleme = (fairRandomNumbersSize.length-1)*random
+	  res = fairRandomNumbersSize.splice(eleme,1);
+		
+	}
+
+	return res
+}
 
 
 // Show target on a random place
@@ -311,11 +339,11 @@ function addTarget() {
 
 
     // Set elevation
-    elevation  = Math.random() * (height - 300);
+    elevation  = fairRandom(0,1,0) * (height - 300);
     target.style.top = elevation + 'px';
 
     // Place target at starting position
-    if(Math.random() > 0.5) {
+    if(fairRandom(1,0,0) > 0.5) {
         // Fly in from left
         start_from = 'left';
         target.style.left = '+150px';
@@ -328,7 +356,7 @@ function addTarget() {
     }
 
     // Set size
-    if(Math.random() > smallSizeChance) {
+    if(fairRandom(0,0,1) > smallSizeChance) {
         // Set small size
         target.style.width = '80px';
         target.style.height = '80px';
