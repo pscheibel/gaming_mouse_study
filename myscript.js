@@ -116,15 +116,35 @@ function startGame() {
 	{
 		retrieveFullDataEntry()
 		
-		for(let i=1; i<=parseInt(set_timer/4); i++) {
-		   fairRandomNumbersSide.push(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.99);
-		   fairRandomNumbersTopPos.push(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.99);
-		   fairRandomNumbersSize.push(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.99);
+		randomBricks=[]
+		randomBrick1=[0.4, 0.2, 0.8, 0.6, 0.3, 0.5, 0.9, 0.3]
+		randomBrick2=[0.25, 0.15, 0.85, 0.5, 0.3, 0.7, 0.4, 0.85]
+		randomBrick3=[0.7, 0.4, 0.8, 0.5, 0.3, 0.1, 0.9, 0.3]
+		randomBrick4=[0.1, 0.3, 0.9, 0.7, 0.8, 0.1, 0.55, 0.55]
+		randomBrick5=[0.8, 0.2, 0.9, 0.5, 0.1, 0.5, 0.9, 0.6]
+		randomBricks.push(randomBrick1)
+		randomBricks.push(randomBrick2)
+		randomBricks.push(randomBrick3)
+		randomBricks.push(randomBrick4)
+		randomBricks.push(randomBrick5)
+		let random=0,randBrickPickIdx=0;
+		for(let i=1; i<=parseInt(set_timer/3); i++) {
+		   random= Math.random()
+		   randBrickPickIdx = (randomBricks.length-1)*random
+		   fairRandomNumbersSide=fairRandomNumbersSide.concat(randomBricks[parseInt(randBrickPickIdx)]);
+		   random= Math.random()
+		   randBrickPickIdx = (randomBricks.length-1)*random
+		   fairRandomNumbersTopPos=fairRandomNumbersTopPos.concat(randomBricks[parseInt(randBrickPickIdx)]);
+		   random= Math.random()
+		   randBrickPickIdx = (randomBricks.length-1)*random
+		   fairRandomNumbersSize=fairRandomNumbersSize.concat(randomBricks[parseInt(randBrickPickIdx)]);
 		}
+		console.log(randomBricks)
+		console.log(fairRandomNumbersSide)
 		hit_count=0;
 		window.focus();
 		countdown();
-		onmousemove = function(e){mouseMovementArray.push({'x':e.clientX,'y': e.clientY,'idx':generatedChickens})}
+		onmousemove = function(e){mouseMovementArray.push({'x':e.clientX,'y': e.clientY,'idx':generatedChickens, 'time': Date.now()})}
 		setGameState(WAIT_FOR_SPAWN)
 		targetInterval();
 
@@ -297,18 +317,13 @@ function removeTarget(e,target_id) {
 }
 
 function fairRandom(side, toppos, size){
-	let random= Math.random()
-	let eleme=0,res=0
 	if (side){
-	  eleme = (fairRandomNumbersSide.length-1)*random
-	  res = fairRandomNumbersSide.splice(eleme,1);
+	  res = fairRandomNumbersSide.pop()
 	}
 	else if (toppos){
-	  eleme = (fairRandomNumbersTopPos.length-1)*random
-	  res = fairRandomNumbersTopPos.splice(eleme,1);
+	  res = fairRandomNumbersTopPos.pop()
 	} else{
-	  eleme = (fairRandomNumbersSize.length-1)*random
-	  res = fairRandomNumbersSize.splice(eleme,1);
+	  res = fairRandomNumbersSize.pop()
 		
 	}
 
