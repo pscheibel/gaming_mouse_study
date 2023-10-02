@@ -66,7 +66,7 @@ async function retrieveFullDataEntry() {
   const query = new Parse.Query("study_data");
   
   try {
-    const studydata = await query.get("GDMwty08xC");
+    const studydata = await query.get("zUPAUOidds");
     const fulldata = studydata.get("fulldata");
 	//console.log(fulldata)
   } catch (error) {
@@ -116,6 +116,7 @@ function startGame() {
 	{
 		retrieveFullDataEntry()
 		
+		setInterval(onmousemove, 50);
 		randomBricks=[]
 		randomBrick1=[0.4, 0.2, 0.8, 0.6, 0.3, 0.5, 0.9, 0.3]
 		randomBrick2=[0.25, 0.15, 0.85, 0.5, 0.3, 0.7, 0.4, 0.85]
@@ -160,7 +161,7 @@ function startGame() {
 		});
 		ammoReloader();
 	}else{
-		onmousemove = function(e){mouseMovementArray.push({'x':e.clientX,'y': e.clientY,'idx':generatedChickens})}
+		onmousemove = function(e){mouseMovementArray.push({'x':e.clientX,'y': e.clientY,'idx':generatedChickens, 'time': Date.now()})}
 		if(getState()==WAIT_FOR_START_BUTTON){
 			setGameState(WAIT_FOR_SPAWN)
 			console.log(getState())
