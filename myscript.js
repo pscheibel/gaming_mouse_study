@@ -60,13 +60,13 @@ let fairRandomNumbersSize = [];
 
 //Reading your First Data Object from Back4App
 async function retrieveFullDataEntry() {
-   if(TEST_MODE==1){
+   if(TEST_MODE==0){
 	  return
   }
   const query = new Parse.Query("study_data");
   
   try {
-    const studydata = await query.get("zUPAUOidds");
+    const studydata = await query.get("eoLfiCMGdJ");
     const fulldata = studydata.get("fulldata");
 	//console.log(fulldata)
   } catch (error) {
